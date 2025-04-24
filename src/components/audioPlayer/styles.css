@@ -1,0 +1,226 @@
+/* Definición de variables para el modo claro (valores por defecto) */
+:root {
+  --player-card-bg: #eaebee;      /* fondo claro para la tarjeta */
+  --player-image-bg: #fdfeff;     /* fondo claro para la imagen */
+  --filename-color: #374151;      /* color de texto para el nombre */
+  --progress-track-bg: #e0e0e0;    /* fondo de la barra de progreso */
+  --progress-thumb-bg: #374151;    /* color del pulgar de la barra */
+  --time-display-color: #666666;  /* color para los tiempos */
+  --volume-control-bg: #f9fafb;    /* fondo del control de volumen */
+  --volume-track-bg: #e0e0e0;
+  --volume-thumb-bg: #374151;
+}
+
+/* Sobrescribimos las variables para el modo oscuro */
+.dark {
+  --player-card-bg: #1f2937;
+  --player-image-bg: #111827;
+  --filename-color: #bebebe;
+  --progress-track-bg: #374151;
+  --progress-thumb-bg: #374151;
+  --time-display-color: #666666;
+  --volume-control-bg: #111827;
+  --volume-track-bg: #e0e0e0;
+  --volume-thumb-bg: #374151;
+}
+
+/* Aplicación de variables en tu CSS existente */
+
+/* Contenedor principal */
+.audio-player-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Tarjeta del reproductor */
+.audio-player-card {
+  border-radius: 12px;
+  background-color: var(--player-card-bg);
+  padding-top: 8px;
+  padding-bottom: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(8, 20, 49, 0.3);
+}
+
+.audio-player-image {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: var(--player-image-bg);
+  margin: 8px 16px;
+}
+
+.audio-visualization {
+  width: 100%;
+  height: 100px; /* Ajusta la altura según necesites */
+  max-width: 100%;
+  display: block;
+  background: transparent;
+}
+
+/* Nombre del archivo */
+.audio-player-filename-container {
+  width: 100%;
+  margin-top: 5px;
+  overflow: hidden;
+  text-align: center;
+  mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+}
+
+.audio-player-filename {
+  font-size: 14px;
+  font-weight: 500;
+  font-weight: bold;
+  white-space: nowrap;
+  color: var(--filename-color);
+  padding: 0 5px;
+}
+
+/* Animación del nombre */
+@keyframes scroll-text-custom {
+  0% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(0);
+  }
+  85% {
+    transform: translateX(calc(-1 * var(--scroll-distance)));
+  }
+  100% {
+    transform: translateX(calc(-1 * var(--scroll-distance)));
+  }
+}
+
+/* Controles del reproductor */
+.audio-player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 12px;
+  margin: 5px 0 10px 0;
+}
+
+/* Barra de progreso */
+.audio-player-progress-container {
+  flex-grow: 1;
+  margin: 0 8px;
+}
+
+.audio-player-progress-bar {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--progress-track-bg);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.audio-player-progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--progress-thumb-bg);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  transform: translateY(-40%);
+}
+
+.audio-player-progress-bar::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--progress-thumb-bg);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  transform: translateY(-40%);
+}
+
+.audio-player-progress-bar::-webkit-slider-runnable-track {
+  height: 4px;
+  background: var(--progress-thumb-bg);
+  border-radius: 2px;
+}
+
+.audio-player-progress-bar::-moz-range-track {
+  height: 4px;
+  background: var(--progress-thumb-bg);
+  border-radius: 2px;
+}
+
+/* Tiempos de reproducción */
+.audio-player-time-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--time-display-color);
+  margin-top: 4px;
+}
+
+/* Control de volumen */
+.audio-player-volume-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.audio-player-volume-control {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-90%, -20%);
+  background: var(--volume-control-bg);
+  border-radius: 4px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.audio-player-volume-slider {
+  width: 80px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--volume-track-bg);
+  border-radius: 2px;
+  outline: none;
+}
+
+.audio-player-volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--volume-thumb-bg);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  position: relative;
+}
+
+.audio-player-volume-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--volume-thumb-bg);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  position: relative;
+}
+
+.audio-player-volume-percentage {
+  font-size: 12px;
+  color: #8d8d8d;
+  min-width: 30px;
+  text-align: center;
+}

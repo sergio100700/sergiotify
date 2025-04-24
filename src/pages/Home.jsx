@@ -1,8 +1,20 @@
 import { motion } from 'framer-motion';
 import { FaMusic } from "react-icons/fa";
-import avatar from '../assets/avatarweb.png';
+import audio1 from '../assets/audio/audio1.mp3';
+import audio2 from '../assets/audio/audio2.mp3';
+import AudioPlayer from '../components/audioPlayer';
+import Playlist from '../components/playlists';
+import { useState } from 'react';
+
+const songs = [
+  { url: audio2, name: "Nature song very long file name to test scrolling" },
+  { url: audio1, name: "Virtual" },
+
+]
 
 function Home() {
+
+  const [selected, setSelected] = useState();
 
   return (
     <motion.section
@@ -11,17 +23,20 @@ function Home() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <h2 className="text-4xl font-bold mb-6 text-center">Sergiotify</h2>
-
       <div className="flex flex-col md:flex-row items-center gap-8">
-        <img
-          src={avatar}
-          alt="Avatar"
-          className="w-40 h-40 rounded-full shadow-md object-cover"
-        />
+
         <div className='flex flex-col items-center md:items-start'>
-          <FaMusic />
+          <AudioPlayer playlist={songs} selected={selected} onPlay={(s) => {
+            setSelected(s)
+          }} />
         </div>
+        <Playlist
+          title={"Top 2 Spain"}
+          selected={selected}
+          songs={songs}
+          onSelectedSong={(s) => {
+            setSelected(s)
+          }} />
       </div>
     </motion.section>
   );

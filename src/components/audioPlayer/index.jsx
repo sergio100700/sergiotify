@@ -26,12 +26,14 @@ const AudioPlayer = ({ playlist, onPlay, selected }) => {
   const sourceNodeRef = useRef(null);
 
   useEffect(() => {
-    setMediaCollection(playlist)
-    setAudio({ url: playlist[0]?.url, name: playlist[0]?.name })
+    if (!playlist) return;
+    setMediaCollection(playlist.songs)
+    setAudio({ url: playlist.songs[0]?.url, name: playlist.songs[0]?.name })
   }, [playlist])
 
   useEffect(() => {
     setIsPlaying(false)
+    if(!selected) return;
     setAudio({ url: selected?.url, name: selected?.name });
     const currentIndex = mediaCollection?.findIndex((_audio) => _audio.url === selected?.url);
     setAudioIndex(currentIndex)
@@ -250,22 +252,22 @@ const AudioPlayer = ({ playlist, onPlay, selected }) => {
 
   return (
     <div className="audio-player-container">
-      {audio && (
+      {(
         <div className="audio-player-card">
           <div className="w-full flex justify-between px-3">
-            <p className="audio-player-filename">{audio?.name}</p>
+            <p className="audio-player-filename">{playlist?.title}</p>
           </div>
-          <audio ref={audioRef} src={audio.url ?? undefined} preload="auto" />
+          <audio ref={audioRef} src={audio?.url ?? undefined} preload="auto" />
           <div className="audio-player-image">
             <canvas ref={canvasRef} className="audio-visualization"></canvas>
           </div>
           <div className="relative">
             <select
-              value={audio.url}
+              value={audio?.url}
               onChange={handleChange}
               className="opacity-0 appearance-none bg-transparent absolute inset-0 z-10 cursor-pointer"
             >
-              {mediaCollection.map((option) => (
+              {mediaCollection?.map((option) => (
                 <option
                   key={option.url}
                   value={option.url}
@@ -308,7 +310,7 @@ const AudioPlayer = ({ playlist, onPlay, selected }) => {
             />
             <div className="audio-player-time-display">
               <span>{formatTime(progress)}</span>
-              <span>{`${audioIndex + 1}/${mediaCollection.length || audioIndex + 1}`}</span>
+              <span>{`${audioIndex + 1}/${mediaCollection?.length || audioIndex + 1}`}</span>
               <span>{formatTime(duration)}</span>
             </div>
           </div>
